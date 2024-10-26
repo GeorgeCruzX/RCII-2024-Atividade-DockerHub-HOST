@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  # Primeiro serviço - usando Nginx como exemplo
+  webserver:
+    image: nginx:latest
+    container_name: meu-nginx
+    ports:
+      - "80:80"      # Porta 80 do container espelhada para porta 80 do host
+      - "443:443"    # Porta 443 do container espelhada para porta 443 do host
+    volumes:
+      - ./nginx-data:/usr/share/nginx/html    # Volume para os arquivos do site
+    restart: always
+
+  # Segundo serviço - usando PostgreSQL como exemplo
+  database:
+    image: postgres:latest
+    container_name: meu-postgres
+    ports:
+      - "5432:5432"  # Porta 5432 do container espelhada para porta 5432 do host
+    environment:
+      - POSTGRES_USER=meuusuario
+      - POSTGRES_PASSWORD=minhasenha
+      - POSTGRES_DB=meubanco
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data    # Volume para os dados do banco
+    restart: always
